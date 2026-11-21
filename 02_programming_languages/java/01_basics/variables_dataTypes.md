@@ -67,14 +67,37 @@ Replace `Type`, `TargetType`, `name`, `NAME`, `expression`, and `length` with th
 
 #### ${\color{#7C4DFF}\textsf{Input and output}}$
 
-| Operation | Class-based example on JDK 8 | Compact example on JDK 25 |
-|---|---|---|
-| Read a line of input | `input.nextLine()`, where `input` is a `Scanner` reading `System.in`. | `IO.readln()`, which reads from `System.in` and returns `null` at end-of-input when no characters remain. |
-| Convert integer text | `Integer.parseInt(text)` | `Integer.parseInt(text)` |
-| Print a line | `System.out.println(value)` | `IO.println(value)` or `System.out.println(value)` |
-| Print a formatted decimal | `System.out.printf(Locale.ROOT, "%.2f%n", value)` | The same `printf` call. `Locale` is available through the compact file's implicit imports. |
+**Standard input** (`System.in`) is the stream a console program reads from. **Standard output** (`System.out`) is the stream it writes to. In an interactive terminal, you normally type input with the keyboard and read output on the screen.
 
-`Scanner` is available in both styles. `java.lang.IO` is available in both styles when targeting JDK 25. Use the `IO.` qualifier unless the method is explicitly statically imported.
+**Read an integer with `Scanner`.** In a class-based file, add `import java.util.Scanner;` above the class. Inside `main`, use these two steps.
+
+1. `Scanner sc = new Scanner(System.in);` creates a reader connected to standard input. `sc` is the variable you use to call its methods.
+2. `int a = sc.nextInt();` reads the next whitespace-delimited piece of input, interprets it as an `int`, and stores the value in `a`. If you type `42` and press Enter, `a` becomes `42`.
+
+Create one `Scanner` and reuse it. For two integers, call `sc.nextInt()` twice. Input such as `10 20` on one line works because the default delimiters include spaces and line breaks.
+
+| Method call | What it reads | Example input |
+|---|---|---|
+| `sc.nextInt()` | The next token as an `int` | `42` |
+| `sc.nextLong()` | The next token as a `long` | `3000000000` |
+| `sc.nextDouble()` | The next token as a `double` using the scanner's locale | `87.5` with `sc.useLocale(Locale.ROOT)` |
+| `sc.nextBoolean()` | The next `true` or `false` token, ignoring case | `true` |
+| `sc.next()` | One token as a `String` | `Sam` from `Sam Lee` |
+| `sc.nextLine()` | The rest of the current line as a `String`, preserving spaces within it | `Sam Lee` when called at the start of that line |
+
+A **token** is a piece of input between delimiters. The methods that read tokens, such as `nextInt()` and `next()`, operate differently from `nextLine()`. For example, if you enter `42` followed by Enter and put `Sam Lee` on the next line, `sc.nextLine()` immediately after `sc.nextInt()` returns an empty string. Call `sc.nextLine()` once to consume the rest of the number's line before reading the name. If your input has one value per line, another option is to read each line with `nextLine()` and parse it as needed, for example `Integer.parseInt(sc.nextLine().trim())`.
+
+**Read an integer with Java 25 `IO`.** Use `String line = IO.readln();` to read a whole line, followed by `int a = Integer.parseInt(line.trim());` to convert it. `IO.readln()` returns text, so the parsing step supplies the numeric value. It returns `null` when it reaches the end of input without reading any characters. `IO.readln("Enter an integer: ")` also prints a prompt before reading.
+
+| Output method | What it does | Example |
+|---|---|---|
+| `System.out.print(value)` | Writes the value and keeps the cursor on the same line. | `System.out.print("Enter an integer: ");` |
+| `System.out.println(value)` | Writes the value and ends the line. | `System.out.println("You entered " + a);` |
+| `System.out.printf(format, values)` | Writes formatted values. Include `%n` to end the line. | `System.out.printf(Locale.ROOT, "%s scored %d and the mean is %.2f%n", "Sam", 42, 87.5);` |
+
+In a format string, `%s` inserts text, `%d` displays a whole number in decimal, and `%.2f` displays a floating-point value with two digits after the decimal separator. `Locale.ROOT` gives these examples a consistent decimal point. Import `java.util.Locale` in a class-based file if you use that name.
+
+`Scanner` and `System.out` work in both styles. In a Java 25 compact source file, `Scanner` and `Locale` are available through implicit imports. `java.lang.IO` is available in either style on JDK 25. Its `IO.print(...)` and `IO.println(...)` methods provide the same line-ending choices shown above, and `System.out.printf(...)` remains available for formatted output.
 
 ### ${\color{#7C4DFF}\textsf{Behavior}}$
 
@@ -136,17 +159,21 @@ Use `Math.round(value)` when you need rounding. It returns `int` for a `float` a
 
 For binary arithmetic, Java first promotes the numeric operands. It chooses the first applicable type from `double`, `float`, `long`, and `int`. In particular, arithmetic with `byte`, `short`, or `char` operands usually produces `int` when both operands are these small integral types.
 
-| Operation | Effect |
-|---|---|
-| `+`, `-`, `*`, `/`, `%` | Arithmetic on promoted operands. Integer division truncates toward zero. A nonzero integer remainder has the dividend's sign. |
-| `+` with a `String` operand | Concatenates text. Group arithmetic in parentheses when it should take place before concatenation. |
-| `==`, `!=`, `<`, `<=`, `>`, `>=` | Compare values where the operand types support the operator and produce a `boolean`. |
-| `&&`, `\|\|`, `!` | Short-circuit AND, short-circuit OR, and logical negation. The short-circuit forms evaluate the right operand only when needed. |
-| `&`, `\|`, `^` | Bitwise operations with integral operands, or logical operations with boolean operands. Both operands of the boolean forms are evaluated. |
-| `~`, `<<`, `>>`, `>>>` | Bit complement, left shift, sign-extending right shift, and zero-fill right shift. |
-| `+=`, `-=`, `*=`, `/=`, `%=` | Performs the operation and assigns the result, with conversion back to the destination type. |
-| `++`, `--` | Increments or decrements a variable. Prefix yields the updated value, and postfix yields the previous value. |
-| `condition ? whenTrue : whenFalse` | Evaluates the condition and then evaluates only the selected result expression. |
+| Operator family | Operators and names | Effect |
+|---|---|---|
+| **Arithmetic operators** | `+` addition, `-` subtraction, `*` multiplication, `/` division, `%` remainder | Operate on promoted numeric operands. Integer division truncates toward zero. A nonzero integer remainder has the dividend's sign. |
+| **String concatenation operator** | `+` concatenation | Joins text when an operand is a `String`. Group arithmetic in parentheses to evaluate it before concatenating. |
+| **Unary arithmetic operators** | `+x` unary plus, `-x` unary minus | Apply to one numeric operand. Unary minus negates its promoted value. |
+| **Increment and decrement operators** | `++` increment, `--` decrement | Change a variable by one. Prefix yields the updated value, while postfix yields the previous value. |
+| **Relational operators** | `<` less than, `<=` less than or equal to, `>` greater than, `>=` greater than or equal to | Compare numeric values and produce a `boolean`. |
+| **Equality operators** | `==` equal to, `!=` not equal to | Test equality or inequality. The operand types determine whether Java compares primitive values or reference identity. |
+| **Logical operators** | `&&` conditional AND, `\|\|` conditional OR, `!` logical NOT | `&&` skips the right operand when the left is false. `\|\|` skips it when the left is true. `!` inverts a boolean value. |
+| **Bitwise and non-short-circuit logical operators** | `&` AND, `\|` OR, `^` XOR. `~` bitwise complement. | The binary forms operate on integral bits or boolean values and evaluate both operands. `~` flips the bits of one integral operand. |
+| **Shift operators** | `<<` left shift, `>>` signed right shift, `>>>` unsigned right shift | Move bits left or right. `>>` fills from the sign bit, while `>>>` fills with zeros. |
+| **Assignment operators** | `=` simple assignment. `+=` addition assignment, `-=` subtraction assignment, `*=` multiplication assignment, `/=` division assignment, `%=` remainder assignment. Bitwise and shift operators also have compound assignment forms. | `=` stores a value. Compound assignment performs an operation and stores its result with the conversion required for the destination type. |
+| **Conditional operator**, also called the **ternary operator** | `condition ? whenTrue : whenFalse` | Takes three operands. It tests the condition and evaluates only the selected result expression. |
+| **Type test operator** | `instanceof` | Tests whether a value matches a type or pattern. For a reference type test, `null` produces `false`. |
+| **Cast operator** | `(Type) expression` | Explicitly converts a value or checks a reference conversion where Java allows it. |
 
 Precedence determines how operators group. Parentheses can change that grouping. For a positive divisor, `Math.floorMod` gives a nonnegative modulus. Use `Math.pow(base, exponent)` for floating-point exponentiation. The `^` operator performs XOR.
 
@@ -208,7 +235,8 @@ A **constant variable** is a `final` primitive or `String` variable initialized 
 | An integer arithmetic result outside its type's range | Ordinary `int` and `long` operations wrap. `Math.addExact` and `Math.multiplyExact` throw `ArithmeticException` on overflow. |
 | Trying to use a primitive as a generic type argument | Compile-time error. Use `ArrayList<Integer>` for boxed integer elements. |
 | Malformed or out-of-range integer text passed to `Integer.parseInt` or `Long.parseLong` | `NumberFormatException` |
-| Using `Scanner.nextLine()` right after a token read at the end of a line | It consumes the current line's remainder, which may be empty. |
+| Calling `Scanner.nextInt()` when the next token is malformed or outside the `int` range | `InputMismatchException`. Use `sc.hasNextInt()` to check before reading. |
+| Calling `Scanner.nextInt()` when the input is exhausted | `NoSuchElementException` |
 | Reusing `System.in` directly after an `IO.readln()` call | The `IO` API leaves the subsequent use unspecified. |
 
 A destination type cannot retroactively change an expression's result. For example, assigning an integer quotient to `double` only widens the already truncated result. Likewise, an `int` product can overflow before assignment to `long`. Make an operand `double` for floating-point division or `long` for a product that needs the wider integer range.
@@ -244,11 +272,77 @@ A destination type cannot retroactively change an expression's result. For examp
 
 ### ${\color{#276BD1}\textsf{Example Setup}}$
 
-The two complete programs below expect two valid integers on separate lines. Use `84` and `91`. The odd total, `175`, makes the difference between integer and floating-point division visible. Both programs also read a static `int` field declared without an initializer to show its default value.
+Start with one integer, `42`, to see how to read, store, and print a value. A second input example uses two scores on the same line followed by a full name on the next line. An operator snippet uses `7` and `2` to show integer division, remainder, equality, and the conditional operator together.
+
+The two score programs expect two valid integers on separate lines. Use `84` and `91`. The odd total, `175`, makes the difference between integer and floating-point division visible. Both programs also read a static `int` field declared without an initializer to show its default value.
 
 The shared snippets each belong inside a separate `main` body in either style. They show how copying a value differs from copying a reference, what happens during numeric conversions, and what a string's length measures.
 
 ### ${\color{#276BD1}\textsf{Implementation}}$
+
+#### ${\color{#276BD1}\textsf{Reading One Integer with Scanner}}$
+
+Save as `ReadInteger.java`. This is a complete class-based program for JDK 8 or later.
+
+```java
+import java.util.Scanner;
+
+public class ReadInteger {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in); // Step 1. Connect to standard input.
+        System.out.print("Enter an integer: ");
+        int a = sc.nextInt();                 // Step 2. Read and store one integer.
+        System.out.println("You entered " + a);
+    }
+}
+```
+
+#### ${\color{#276BD1}\textsf{Reading One Integer with Java 25 IO}}$
+
+Save as `ReadInteger25.java` and run `java ReadInteger25.java` on JDK 25. This is a complete compact program.
+
+```java
+void main() {
+    String line = IO.readln("Enter an integer: ");
+    if (line == null) {
+        return;
+    }
+
+    int a = Integer.parseInt(line.trim());
+    IO.println("You entered " + a);
+}
+```
+
+#### ${\color{#276BD1}\textsf{Reading Two Integers and a Full Name}}$
+
+Put this snippet inside a separate `main` body. A class-based file needs `import java.util.Scanner;` and `import java.util.Locale;` above its class. Read the two scores from one line and the name from the next.
+
+```java
+Scanner sc = new Scanner(System.in);
+int firstScore = sc.nextInt();
+int secondScore = sc.nextInt();
+sc.nextLine(); // Consume the rest of the scores' line.
+String fullName = sc.nextLine();
+
+double average = (firstScore + secondScore) / 2.0;
+System.out.printf(Locale.ROOT, "%s: %.2f%n", fullName, average);
+```
+
+#### ${\color{#276BD1}\textsf{Using Named Operator Families}}$
+
+Put this shared snippet inside a separate `main` body in either style.
+
+```java
+int number = 7;
+int quotient = number / 2;                      // Arithmetic operator
+boolean isEven = number % 2 == 0;               // Remainder and equality
+String parity = isEven ? "even" : "odd";        // Conditional (ternary) operator
+number += 2;                                   // Compound assignment operator
+
+System.out.println(quotient);
+System.out.println(parity);
+System.out.println(number);
+```
 
 #### ${\color{#276BD1}\textsf{Java Classic — Class-Based}}$
 
@@ -360,6 +454,44 @@ System.out.println(text.codePointCount(0, text.length()));
 ```
 
 ### ${\color{#276BD1}\textsf{Result and Walkthrough}}$
+
+#### ${\color{#276BD1}\textsf{Reading One Integer}}$
+
+Enter `42`. This is the terminal interaction for the class-based program and the **expected terminal interaction** for the compact program. The `42` on the first line is what you type.
+
+```text
+Enter an integer: 42
+You entered 42
+```
+
+`print` and `IO.readln(prompt)` display the prompt on the same line as the typed input. The `Scanner` version reads `42` directly as an `int`. The `IO` version reads `"42"` as a `String`, then `Integer.parseInt` converts it to the `int` value `42`. Each program stores that value in `a` and prints it.
+
+#### ${\color{#276BD1}\textsf{Reading Two Integers and a Full Name}}$
+
+Input
+
+```text
+84 91
+Sam Lee
+```
+
+Output
+
+```text
+Sam Lee: 87.50
+```
+
+The two `nextInt()` calls read `84` and `91` from the same line. The first `nextLine()` advances past the remainder of that line. The second reads `"Sam Lee"` as a single string. The average is `175 / 2.0 = 87.5`. The `%.2f` format specifier displays it as `87.50`.
+
+#### ${\color{#276BD1}\textsf{Using Named Operator Families}}$
+
+```text
+3
+odd
+9
+```
+
+`7 / 2` uses integer division and produces `3`. The remainder operator gives `7 % 2 = 1`, so the equality comparison with `0` produces `false`. The ternary operator selects `"odd"`. Finally, `number += 2` updates `number` from `7` to `9`.
 
 #### ${\color{#276BD1}\textsf{Complete Programs}}$
 
