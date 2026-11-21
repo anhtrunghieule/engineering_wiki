@@ -1,8 +1,8 @@
-# <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Java Variables and Data Types</span>
+# ${\color{#7C4DFF}\textsf{Java Variables and Data Types}}$
 
-## <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Theory</span>
+## ${\color{#7C4DFF}\textsf{Theory}}$
 
-### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Definition and Purpose</span>
+### ${\color{#7C4DFF}\textsf{Definition and Purpose}}$
 
 A **variable** holds a value that a program can read and, where allowed, replace. Its **type** determines which values it can hold, which operations can use it, and how Java interprets those operations. Java is statically typed. The compiler knows the type of each variable and expression, including variables declared with `var`.
 
@@ -13,9 +13,9 @@ A **variable** holds a value that a program can read and, where allowed, replace
 
 A **declaration** introduces a variable. An **initializer** supplies its starting value as part of that declaration. An **assignment** stores a value in an existing variable. A **literal** writes a value directly in the source, such as `42` or `"Sam"`. A **scope** is the region of source code where a declared name is available.
 
-### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Syntax</span>
+### ${\color{#7C4DFF}\textsf{Syntax}}$
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Declarations, initializers, and assignments</span>
+#### ${\color{#7C4DFF}\textsf{Declarations, initializers, and assignments}}$
 
 | Written form | How to read it |
 |---|---|
@@ -31,7 +31,7 @@ A **declaration** introduces a variable. An **initializer** supplies its startin
 
 Replace `Type`, `TargetType`, `name`, `NAME`, `expression`, and `length` with the type, identifier, or expression your code needs. Separate unrelated declarations to make each variable's purpose and initializer clear. Ordinary variable and field names usually use `lowerCamelCase`, such as `totalScore` or `isReady`.
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Where declarations go</span>
+#### ${\color{#7C4DFF}\textsf{Where declarations go}}$
 
 | Location | Declaration form | What it declares |
 |---|---|---|
@@ -50,7 +50,7 @@ Replace `Type`, `TargetType`, `name`, `NAME`, `expression`, and `length` with th
 
 **Java Classic** here names the class-based entry-point style. A class-based program can target JDK 25 and use its APIs and language features. The Classic program under **Implementation** uses Java 8-compatible syntax and APIs.
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Literal notation</span>
+#### ${\color{#7C4DFF}\textsf{Literal notation}}$
 
 | Form | Type or meaning |
 |---|---|
@@ -65,7 +65,7 @@ Replace `Type`, `TargetType`, `name`, `NAME`, `expression`, and `length` with th
 | `true`, `false` | The two `boolean` literals. |
 | `null` | The null literal. It has the null type and can be assigned to a reference variable. |
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Input and output</span>
+#### ${\color{#7C4DFF}\textsf{Input and output}}$
 
 | Operation | Class-based example on JDK 8 | Compact example on JDK 25 |
 |---|---|---|
@@ -76,9 +76,9 @@ Replace `Type`, `TargetType`, `name`, `NAME`, `expression`, and `length` with th
 
 `Scanner` is available in both styles. `java.lang.IO` is available in both styles when targeting JDK 25. Use the `IO.` qualifier unless the method is explicitly statically imported.
 
-### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Behavior</span>
+### ${\color{#7C4DFF}\textsf{Behavior}}$
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">The eight primitive types</span>
+#### ${\color{#7C4DFF}\textsf{The eight primitive types}}$
 
 | Type | Representation | Range or values | Default for fields and array components |
 |---|---|---|---|
@@ -97,7 +97,7 @@ The signed range for `n` bits is `−2^(n−1)` through `2^(n−1) − 1`. The l
 
 `char` holds one code unit. `String.length()` counts code units, and `String.codePointCount(begin, end)` counts code points in that range. A supplementary Unicode code point requires two UTF-16 code units.
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Reference values and copying</span>
+#### ${\color{#7C4DFF}\textsf{Reference values and copying}}$
 
 Class types such as `String` and `Integer`, interface types such as `List<String>`, array types such as `int[]`, and type variables such as `T` are reference types. Enums and records are kinds of classes. A variable's **declared type** determines which members the compiler allows through that variable. The referenced object's **runtime class** may be a compatible subtype.
 
@@ -105,7 +105,7 @@ Assignment copies the stored value. Copying a primitive value gives a second var
 
 A `String` is immutable. A call that transforms text returns a result while the original string's contents stay the same. An array is mutable. For a one-dimensional primitive array, `clone()` copies the components into a separate array. For an object array or nested array, `clone()` copies the component references, so the referenced objects may still be shared.
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Numeric conversions</span>
+#### ${\color{#7C4DFF}\textsf{Numeric conversions}}$
 
 A **widening primitive conversion** can occur implicitly in a compatible assignment.
 
@@ -132,7 +132,7 @@ A **narrowing primitive conversion** generally needs an explicit cast. The cast 
 
 Use `Math.round(value)` when you need rounding. It returns `int` for a `float` argument and `long` for a `double` argument, with ties toward positive infinity. Use `Math.toIntExact(value)` for a checked `long` to `int` conversion that throws `ArithmeticException` for an out-of-range value.
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Operators and result types</span>
+#### ${\color{#7C4DFF}\textsf{Operators and result types}}$
 
 For binary arithmetic, Java first promotes the numeric operands. It chooses the first applicable type from `double`, `float`, `long`, and `int`. In particular, arithmetic with `byte`, `short`, or `char` operands usually produces `int` when both operands are these small integral types.
 
@@ -150,7 +150,7 @@ For binary arithmetic, Java first promotes the numeric operands. It chooses the 
 
 Precedence determines how operators group. Parentheses can change that grouping. For a positive divisor, `Math.floorMod` gives a nonnegative modulus. Use `Math.pow(base, exponent)` for floating-point exponentiation. The `^` operator performs XOR.
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Boxing, unboxing, and parsing</span>
+#### ${\color{#7C4DFF}\textsf{Boxing, unboxing, and parsing}}$
 
 | Primitive | Wrapper | Primitive | Wrapper |
 |---|---|---|---|
@@ -163,29 +163,29 @@ Precedence determines how operators group. Parentheses can change that grouping.
 
 **Parsing** interprets text as a value. `Integer.parseInt` and `Long.parseLong` read integer text. `Double.parseDouble` reads floating-point text. `Boolean.parseBoolean` returns `true` when the input equals `"true"` ignoring case, and `false` for other input, including `null`. `String.valueOf(value)` provides the corresponding text conversion for many kinds of values. Formatting such as `%.2f` changes the displayed text and leaves the stored number intact. `%n` emits the platform's line separator.
 
-### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Rules and Boundaries</span>
+### ${\color{#7C4DFF}\textsf{Rules and Boundaries}}$
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Names, scope, and initialization</span>
+#### ${\color{#7C4DFF}\textsf{Names, scope, and initialization}}$
 
 - A Java identifier can begin with a permitted Java letter, including many Unicode letters, `_`, or `$`. A digit may follow a permitted starting character. Names are case-sensitive. A leading digit, a space, or a hyphen makes a proposed name invalid. Reserved spellings such as `class`, `int`, `true`, and `null` are unavailable as names. A single `_` is a reserved keyword in modern Java, with specific unnamed declaration uses from JDK 22.
 - A local name declared in a block is only in scope through the rest of its enclosing block, including its initializer. An attempt to read its own value in that initializer fails definite assignment. A variable declared in a basic `for` header is available within its scope in the header and body. A local variable or parameter can shadow a field. In an instance method, `this.fieldName` selects the current object's field.
 - A local variable needs a definitely assigned value on every possible execution path that reaches a read. Declaring `int total;` inside a method leaves it unassigned until an initializer or later assignment supplies a value. A method or constructor parameter receives the corresponding argument value on entry.
 - A class field, instance field, or array component starts with its type's default. Primitive defaults are in the primitive table and reference defaults are `null`. An instance field is associated with one object, while a static field belongs to its class. Java applies field initializers and initialization code where applicable. Blank `final` fields have additional definite-assignment rules.
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Literal types and assignment compatibility</span>
+#### ${\color{#7C4DFF}\textsf{Literal types and assignment compatibility}}$
 
 - Java determines the type of a literal before applying assignment conversions. An unsuffixed decimal integer literal too large for `int` cannot be rescued by assignment to `long`. Write `3_000_000_000L`. The minus sign is a unary operator. Java has special literal rules for writing the decimal minimum values `-2147483648` and `-9223372036854775808L`.
 - A floating-point literal such as `1.5` has type `double`. To initialize a `float` directly with that literal, use `1.5f` or an explicit `(float)` cast.
 - A representable constant expression of type `byte`, `short`, `char`, or `int` can be assigned directly to `byte`, `short`, or `char`. Thus `byte limit = 100;` is valid. With an ordinary `int` variable holding 100, a `byte` assignment needs a cast. Regular method arguments follow invocation conversion rules and do not get this constant narrowing allowance.
 - `void` indicates that a method returns no value. It cannot be used as a variable type.
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Final variables and constants</span>
+#### ${\color{#7C4DFF}\textsf{Final variables and constants}}$
 
 A `final` variable can be assigned once. A **blank final** starts with no initializer in its declaration and must be assigned at the required point. For example, a constructor can assign a blank final instance field. If the variable holds a reference, `final` prevents replacing that reference. The object's type still determines whether its contents can change.
 
 A **constant variable** is a `final` primitive or `String` variable initialized with a constant expression. A `static final Integer` field and a primitive field initialized with `Integer.parseInt(...)` fall outside this definition. An **effectively final** local variable or parameter is a candidate for capture by a lambda because it satisfies the compiler's rules for being left unchanged after initialization.
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Type inference and version-specific declarations</span>
+#### ${\color{#7C4DFF}\textsf{Type inference and version-specific declarations}}$
 
 **Local inference with `var`.** JDK 8 requires an explicit local type, as in `int score = 42;`. JDK 10 and later, including JDK 25, can also use `var score = 42;` in the class-based or compact style. In that example the compiler infers `int`. The type stays fixed. For `var` in an ordinary local declaration, write one declarator and supply an initializer with a type that can be inferred. A bare `null`, an array initializer such as `{84, 91}`, or a lambda without a target type causes a compile-time error. `var item = (String) null;` and `var scores = new int[] {84, 91};` supply types. The form `var list = new ArrayList<>();` infers `ArrayList<Object>` in this context. Use `new ArrayList<String>()` when the intended element type is `String`.
 
@@ -197,7 +197,7 @@ A **constant variable** is a `final` primitive or `String` variable initialized 
 | Intentionally unused exception variable | Write a named parameter, such as `catch (NumberFormatException ignored)`. | `catch (NumberFormatException _)` leaves the parameter unnamed. This form became permanent in JDK 22. The handling code cannot read the discarded parameter. |
 | Exact test before narrowing a primitive | For an `int`, check `Byte.MIN_VALUE` through `Byte.MAX_VALUE` before casting to `byte`. | `number instanceof byte narrowed` tests whether the value is exactly representable as a `byte` and binds the converted value on success. This extension is a third preview in JDK 25 and requires preview to be enabled. It also extends primitive support in `switch`. |
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Runtime boundaries</span>
+#### ${\color{#7C4DFF}\textsf{Runtime boundaries}}$
 
 | Condition | Consequence |
 |---|---|
@@ -213,9 +213,9 @@ A **constant variable** is a `final` primitive or `String` variable initialized 
 
 A destination type cannot retroactively change an expression's result. For example, assigning an integer quotient to `double` only widens the already truncated result. Likewise, an `int` product can overflow before assignment to `long`. Make an operand `double` for floating-point division or `long` for a product that needs the wider integer range.
 
-### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Related Forms</span>
+### ${\color{#7C4DFF}\textsf{Related Forms}}$
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Choosing a type</span>
+#### ${\color{#7C4DFF}\textsf{Choosing a type}}$
 
 | Need | Use | Practical distinction |
 |---|---|---|
@@ -228,7 +228,7 @@ A destination type cannot retroactively change an expression's result. For examp
 | Identifiers with meaningful formatting | `String` | Values such as `"00042"` keep their leading zeros. |
 | A true/false condition | `boolean` | Use a wrapper when a compatible generic collection or a nullable reference is needed. |
 
-#### <span style="color:#7C4DFF;color:color-mix(in srgb,#7C4DFF 68%,currentColor)">Comparing values</span>
+#### ${\color{#7C4DFF}\textsf{Comparing values}}$
 
 | Form | What it checks |
 |---|---|
@@ -240,17 +240,17 @@ A destination type cannot retroactively change an expression's result. For examp
 | `boxed == 42` for an `Integer` variable | Unboxes the wrapper and compares numerically. A null wrapper causes `NullPointerException`. |
 
 
-## <span style="color:#276BD1;color:color-mix(in srgb,#276BD1 68%,currentColor)">Code Example</span>
+## ${\color{#276BD1}\textsf{Code Example}}$
 
-### <span style="color:#276BD1;color:color-mix(in srgb,#276BD1 68%,currentColor)">Example Setup</span>
+### ${\color{#276BD1}\textsf{Example Setup}}$
 
 The two complete programs below expect two valid integers on separate lines. Use `84` and `91`. The odd total, `175`, makes the difference between integer and floating-point division visible. Both programs also read a static `int` field declared without an initializer to show its default value.
 
 The shared snippets each belong inside a separate `main` body in either style. They show how copying a value differs from copying a reference, what happens during numeric conversions, and what a string's length measures.
 
-### <span style="color:#276BD1;color:color-mix(in srgb,#276BD1 68%,currentColor)">Implementation</span>
+### ${\color{#276BD1}\textsf{Implementation}}$
 
-#### <span style="color:#276BD1;color:color-mix(in srgb,#276BD1 68%,currentColor)">Java Classic — Class-Based</span>
+#### ${\color{#276BD1}\textsf{Java Classic — Class-Based}}$
 
 Save as `ClassicVariables.java`. This complete program uses the conventional class-based entry point and targets JDK 8 or later. Compile with `javac ClassicVariables.java`, then run `java ClassicVariables`.
 
@@ -278,7 +278,7 @@ public class ClassicVariables {
 }
 ```
 
-#### <span style="color:#276BD1;color:color-mix(in srgb,#276BD1 68%,currentColor)">Java 25 — Compact Source File</span>
+#### ${\color{#276BD1}\textsf{Java 25 — Compact Source File}}$
 
 Save as `CompactVariables.java` and run `java CompactVariables.java` using JDK 25. This complete program uses an instance `main` method, `IO` for line input and output, and `var` for the local total.
 
@@ -300,7 +300,7 @@ void main() {
 }
 ```
 
-#### <span style="color:#276BD1;color:color-mix(in srgb,#276BD1 68%,currentColor)">Shared Snippet — Copying Values and References</span>
+#### ${\color{#276BD1}\textsf{Shared Snippet — Copying Values and References}}$
 
 ```java
 int score = 84;
@@ -323,7 +323,7 @@ System.out.println(independentCopy[0]);
 System.out.println(unboxed);
 ```
 
-#### <span style="color:#276BD1;color:color-mix(in srgb,#276BD1 68%,currentColor)">Shared Snippet — Numeric Conversion and Promotion</span>
+#### ${\color{#276BD1}\textsf{Shared Snippet — Numeric Conversion and Promotion}}$
 
 ```java
 byte limit = 100;
@@ -348,7 +348,7 @@ System.out.println(widenedProduct);
 System.out.println(longProduct);
 ```
 
-#### <span style="color:#276BD1;color:color-mix(in srgb,#276BD1 68%,currentColor)">Shared Snippet — Code Units and Text</span>
+#### ${\color{#276BD1}\textsf{Shared Snippet — Code Units and Text}}$
 
 ```java
 char grade = 'A';
@@ -359,9 +359,9 @@ System.out.println(text.length());
 System.out.println(text.codePointCount(0, text.length()));
 ```
 
-### <span style="color:#276BD1;color:color-mix(in srgb,#276BD1 68%,currentColor)">Result and Walkthrough</span>
+### ${\color{#276BD1}\textsf{Result and Walkthrough}}$
 
-#### <span style="color:#276BD1;color:color-mix(in srgb,#276BD1 68%,currentColor)">Complete Programs</span>
+#### ${\color{#276BD1}\textsf{Complete Programs}}$
 
 **Result** for the class-based program and **expected result** for the Java 25 compact program with input `84` followed by `91`.
 
@@ -376,7 +376,7 @@ Fractional mean = 87.5
 3. `175 / 2` first yields the integer `87`. The assignment converts that value to `87.0`.
 4. `(double) total / SCORE_COUNT` divides `175.0` by `2.0` after numeric promotion. This gives `87.5`.
 
-#### <span style="color:#276BD1;color:color-mix(in srgb,#276BD1 68%,currentColor)">Copying Values and References</span>
+#### ${\color{#276BD1}\textsf{Copying Values and References}}$
 
 ```text
 84
@@ -387,7 +387,7 @@ Fractional mean = 87.5
 
 `copiedScore` holds a separate primitive value, so changing it leaves `score` at `84`. `alias` and `scores` hold references to the same array. Through `alias`, the code changes the first component to `90`. The `final` declaration fixes the reference in `scores` while allowing component updates. `clone()` creates an independent primitive array, so `77` appears only in the copy. Boxing and unboxing preserve the integer `90`.
 
-#### <span style="color:#276BD1;color:color-mix(in srgb,#276BD1 68%,currentColor)">Numeric Conversion and Promotion</span>
+#### ${\color{#276BD1}\textsf{Numeric Conversion and Promotion}}$
 
 ```text
 120
@@ -403,7 +403,7 @@ Fractional mean = 87.5
 - Casting `-9.78` to `int` discards the fraction toward zero. Casting `130` to `byte` retains the eight-bit pattern for unsigned `130`, which represents `130 − 256 = −126` in a signed byte.
 - `50,000 × 50,000` is `2,500,000,000`. The `int` product wraps by `2³²` to `-1,794,967,296` before widening. Casting an operand to `long` makes the multiplication itself use `long`, so the second calculation preserves `2,500,000,000`.
 
-#### <span style="color:#276BD1;color:color-mix(in srgb,#276BD1 68%,currentColor)">Code Units and Text</span>
+#### ${\color{#276BD1}\textsf{Code Units and Text}}$
 
 ```text
 65
