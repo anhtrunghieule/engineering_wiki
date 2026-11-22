@@ -21,27 +21,26 @@ The examples use **C++17**.
 ```cpp
 int count;              // Declaration without an initializer
 int total = 0;          // Declaration with an initializer
-int remaining{0};       // Brace initialization
-const int passMark{5};  // Initialized const variable
+const int passMark = 5; // Initialized const variable
 
 total = 12;             // Assignment to an existing variable
 ```
 
-In `int total = 0;`, `int` is the type, `total` is the variable name, and `0` is the initializer. In `total = 12;`, the variable already exists and receives a new value. `const` prevents later assignment to `passMark`.
+In `int total = 0;`, `int` is the type, `total` is the variable name, and `0` is the initializer. The `=` in a declaration gives the variable its first value. In `total = 12;`, `=` assigns a new value to an existing variable. `const` prevents later assignment to `passMark`.
 
 | Type | Use | Example declaration |
 |---|---|---|
-| `short` | Signed whole numbers with a guaranteed minimum width of 16 bits | `short day{25};` |
-| `int` | Whole-number counts, indices, and small arithmetic | `int age{19};` |
-| `long` | Signed whole numbers with a guaranteed minimum width of 32 bits | `long distance{120000L};` |
-| `long long` | Large whole numbers with a guaranteed minimum width of 64 bits | `long long total{3'000'000'000LL};` |
-| `unsigned int` | Nonnegative integer values, such as bit masks | `unsigned int mask{5u};` |
-| `float` | Floating-point values when `float` precision is sufficient | `float ratio{0.5f};` |
-| `double` | Floating-point values such as decimal scores and averages | `double score{7.25};` |
-| `long double` | Floating-point values with at least the precision of `double` | `long double pi{3.14159L};` |
-| `char` | A single ordinary character such as a grade letter | `char grade{'A'};` |
-| `bool` | A truth value | `bool passed{true};` |
-| `string` | Text such as a full name. Include `<string>`. | `string name{"Alex Morgan"};` |
+| `short` | Signed whole numbers with a guaranteed minimum width of 16 bits | `short day = 25;` |
+| `int` | Whole-number counts, indices, and small arithmetic | `int age = 19;` |
+| `long` | Signed whole numbers with a guaranteed minimum width of 32 bits | `long distance = 120000L;` |
+| `long long` | Large whole numbers with a guaranteed minimum width of 64 bits | `long long total = 3'000'000'000LL;` |
+| `unsigned int` | Nonnegative integer values, such as bit masks | `unsigned int mask = 5u;` |
+| `float` | Floating-point values when `float` precision is sufficient | `float ratio = 0.5f;` |
+| `double` | Floating-point values such as decimal scores and averages | `double score = 7.25;` |
+| `long double` | Floating-point values with at least the precision of `double` | `long double pi = 3.14159L;` |
+| `char` | A single ordinary character such as a grade letter | `char grade = 'A';` |
+| `bool` | A truth value | `bool passed = true;` |
+| `string` | Text such as a full name. Include `<string>`. | `string name = "Alex Morgan";` |
 
 A **literal** writes a value directly in source code. `'A'` is a character literal, while `"A"` is a string literal that can initialize a `string`. `7.25` and `4e3` are `double` literals, and `4e3` represents `4 × 10³ = 4000`. The suffix `f` makes a floating-point literal a `float`. The suffix `LL` selects `long long` for the decimal integer literal shown above.
 
@@ -63,18 +62,18 @@ A **literal** writes a value directly in source code. `'A'` is a character liter
 Include `<iostream>` for `cin` and `cout`. The examples put `using namespace std;` after the `#include` directives and before `main()` so standard-library names such as `cin`, `cout`, `string`, and `getline` can be used directly. To read one integer inside `main()`, first declare a destination variable, then extract the input value into it.
 
 ```cpp
-int age{0};       // 1. Create an int variable to receive the value
-cin >> age;  // 2. Read the next integer into age
+int age = 0;  // 1. Create an int variable to receive the value
+cin >> age;   // 2. Read the next integer into age
 ```
 
 | Input needed | Declare the destination, then read |
 |---|---|
-| One large integer | `long long population{0}; cin >> population;` |
-| Two integers | `int a{0}, b{0}; cin >> a >> b;` |
-| Two decimal numbers | `double x{0.0}, y{0.0}; cin >> x >> y;` |
-| One non-whitespace character | `char grade{}; cin >> grade;` |
-| One word | `string word; cin >> word;` |
-| One full line | `string line; getline(cin, line);` |
+| One large integer | `long long population = 0; cin >> population;` |
+| Two integers | `int a = 0, b = 0; cin >> a >> b;` |
+| Two decimal numbers | `double x = 0.0, y = 0.0; cin >> x >> y;` |
+| One non-whitespace character | `char grade = '\0'; cin >> grade;` |
+| One word | `string word = ""; cin >> word;` |
+| One full line | `string line = ""; getline(cin, line);` |
 
 Include `<string>` for `string` and the `getline` overload shown here. In `getline(cin, line)`, `cin` supplies the characters and `line` receives them.
 
@@ -110,8 +109,8 @@ The last form needs `<iomanip>` for `setprecision`. `result` is a floating-point
 | Rule | Practical consequence |
 |---|---|
 | Use letters, digits, or underscores for ordinary ASCII variable names. Choose a letter as the first character for names such as `yearOfBirth` or `year_of_birth`. | `1stYear`, `my age`, `this-year`, and the keyword `int` are invalid variable names. A leading underscore can be valid, and some underscore-prefixed names are reserved. `age` and `Age` are distinct. |
-| A local variable declared inside a block can be referenced after its declaration up to the end of the block, unless a nested declaration hides the name. Initialize local scalar variables before reading them. | In C++17, reading an uninitialized local `int` has undefined behavior. `int count{0};` gives it a known starting value. |
-| Brace initialization rejects narrowing conversions such as `double` to `int`. | `int n{7.9};` produces a compile-time error. `static_cast<int>(7.9)` explicitly discards the fractional part and yields `7`. |
+| A local variable declared inside a block can be referenced after its declaration up to the end of the block, unless a nested declaration hides the name. Initialize local scalar variables before reading them. | In C++17, reading an uninitialized local `int` has undefined behavior. `int count = 0;` gives it a known starting value. |
+| Choose a type that can represent the value you need. | `double score = 7.9;` retains the fractional part, while `int n = 7.9;` converts the value to `7`. Use `static_cast<int>(score)` when you intend to discard the fractional part and the whole-number result fits in `int`. |
 | Match the type to the range of both the inputs and intermediate results. | Signed arithmetic overflow has undefined behavior. Floating-point representations can round decimal values. Check the implementation limits below when choosing a type. |
 | Use integral operands with `%`, and check that the divisor is nonzero before integer `/` or `%`. | `7.5 % 2` is a compile-time error. Integer division or remainder by zero has undefined behavior. |
 | Precedence controls expression grouping. Use parentheses when mixing stream insertion with comparisons or ternary expressions. | `cout << (a < b);` prints the comparison result. `*`, `/`, and `%` bind more tightly than binary `+` and `-`. |
@@ -168,7 +167,7 @@ Save as `read_integer.cpp`. Type `19` and press Enter when running interactively
 using namespace std;
 
 int main() {
-    int age{0};
+    int age = 0;
 
     if (!(cin >> age)) {
         return 1;
@@ -190,17 +189,17 @@ Save as `integer_report.cpp`. This example assumes both inputs are within `[-1'0
 using namespace std;
 
 int main() {
-    long long a{0};
-    long long b{0};
+    long long a = 0;
+    long long b = 0;
 
     if (!(cin >> a >> b) || b == 0) {
         return 1;
     }
 
-    const long long sum{a + b};
-    const long long quotient{a / b};
-    const double decimalQuotient{static_cast<double>(a) / b};
-    const long long remainder{a % b};
+    const long long sum = a + b;
+    const long long quotient = a / b;
+    const double decimalQuotient = static_cast<double>(a) / b;
+    const long long remainder = a % b;
 
     cout << a << " + " << b << " = " << sum << '\n';
     cout << "Integer quotient: " << quotient << '\n';
@@ -229,11 +228,11 @@ Alex Morgan
 using namespace std;
 
 int main() {
-    double firstScore{0.0};
-    double secondScore{0.0};
-    char group{};
-    string courseCode;
-    string fullName;
+    double firstScore = 0.0;
+    double secondScore = 0.0;
+    char group = '\0';
+    string courseCode = "";
+    string fullName = "";
 
     if (!(cin >> firstScore >> secondScore >> group >> courseCode)) {
         return 1;
@@ -242,9 +241,9 @@ int main() {
         return 1;
     }
 
-    const double total{firstScore + secondScore};
-    const double average{total / 2.0};
-    const bool passed{average >= 5.0};
+    const double total = firstScore + secondScore;
+    const double average = total / 2.0;
+    const bool passed = average >= 5.0;
 
     cout << "Student: " << fullName << '\n';
     cout << "Course: " << courseCode << " (group " << group << ")\n";
@@ -265,13 +264,13 @@ Save as `operators.cpp`.
 using namespace std;
 
 int main() {
-    int count{7};
+    int count = 7;
     count += 2;
-    const int beforeIncrement{count++};
-    const int afterIncrement{++count};
-    const int beforeDecrement{count--};
-    const int afterDecrement{--count};
-    const bool inRange{count >= 5 && count <= 10};
+    const int beforeIncrement = count++;
+    const int afterIncrement = ++count;
+    const int beforeDecrement = count--;
+    const int afterDecrement = --count;
+    const bool inRange = count >= 5 && count <= 10;
 
     cout << "Increment values: " << beforeIncrement << ' ' << afterIncrement << '\n';
     cout << "Decrement values: " << beforeDecrement << ' ' << afterDecrement << '\n';
@@ -280,8 +279,8 @@ int main() {
     cout << "Negative division: " << (-9 / 2) << '\n';
     cout << "Negative remainder: " << (-9 % 2) << '\n';
 
-    const unsigned int firstMask{5u};   // Low bits: 101
-    const unsigned int secondMask{3u};  // Low bits: 011
+    const unsigned int firstMask = 5u;  // Low bits: 101
+    const unsigned int secondMask = 3u;  // Low bits: 011
     cout << "AND, OR, XOR: " << (firstMask & secondMask) << ' '
               << (firstMask | secondMask) << ' ' << (firstMask ^ secondMask) << '\n';
     cout << "Left shift: " << (firstMask << 1) << '\n';
@@ -297,7 +296,7 @@ int main() {
 Age: 19
 ```
 
-`int age{0};` creates the destination with an initial value of `0`. The successful `cin >> age` replaces it with `19`. The output chain writes the label, the stored number, and a newline. With input `abc`, the read fails and the program exits with status `1` before printing anything.
+`int age = 0;` creates the destination with an initial value of `0`. The successful `cin >> age` replaces it with `19`. The output chain writes the label, the stored number, and a newline. With input `abc`, the read fails and the program exits with status `1` before printing anything.
 
 #### ${\color{#276BD1}\textsf{Read two integers and compare division results}}$
 
